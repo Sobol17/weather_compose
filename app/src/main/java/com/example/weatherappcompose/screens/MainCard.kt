@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,8 +20,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabPosition
 import androidx.compose.material3.TabRow
-import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -37,94 +34,92 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.weatherappcompose.R
 import com.example.weatherappcompose.ui.theme.AccentBlue
-import com.example.weatherappcompose.ui.theme.baseDark
+import com.example.weatherappcompose.ui.theme.BaseWhite
 import kotlinx.coroutines.launch
 
 @Composable
 fun MainCard() {
-    Column(){
-        Card(
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 12.dp, end = 12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = AccentBlue
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 1.dp
+        ),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 12.dp, end = 12.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = AccentBlue
-            ),
-            elevation = CardDefaults.cardElevation(
-                defaultElevation = 1.dp
-            ),
-            shape = RoundedCornerShape(10.dp)
+                .padding(10.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Text(
-                        text = "27.11.2024",
-                        style = TextStyle(fontSize = 15.sp),
-                        color = Color.White
-                    )
-                    AsyncImage(
-                        model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
-                        contentDescription = "weatherIcon",
-                        modifier = Modifier.size(32.dp)
-                    )
-                }
                 Text(
-                    text = "Irkutsk",
-                    style = TextStyle(fontSize = 32.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(bottom = 12.dp)
-                )
-                Text(
-                    text = "23°C",
-                    style = TextStyle(fontSize = 40.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(bottom = 8.dp)
-                )
-                Text(
-                    text = "sunny",
-                    style = TextStyle(fontSize = 15.sp),
-                    color = Color.White,
-                    modifier = Modifier.padding(bottom = 4.dp)
-                )
-                Text(
-                    text = "23.0 °C - 8.0 °C",
+                    text = "27.11.2024",
                     style = TextStyle(fontSize = 15.sp),
                     color = Color.White
                 )
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                AsyncImage(
+                    model = "https://cdn.weatherapi.com/weather/64x64/day/116.png",
+                    contentDescription = "weatherIcon",
+                    modifier = Modifier.size(32.dp)
+                )
+            }
+            Text(
+                text = "Irkutsk",
+                style = TextStyle(fontSize = 32.sp),
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+            Text(
+                text = "23°C",
+                style = TextStyle(fontSize = 40.sp),
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 8.dp)
+            )
+            Text(
+                text = "sunny",
+                style = TextStyle(fontSize = 15.sp),
+                color = Color.White,
+                modifier = Modifier.padding(bottom = 4.dp)
+            )
+            Text(
+                text = "23.0 °C - 8.0 °C",
+                style = TextStyle(fontSize = 15.sp),
+                color = Color.White
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = {}
                 ) {
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_search),
-                            contentDescription = "iconSearch",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.White
-                        )
-                    }
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_refresh),
-                            contentDescription = "iconSearch",
-                            modifier = Modifier.size(24.dp),
-                            tint = Color.White
-                        )
-                    }
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_search),
+                        contentDescription = "iconSearch",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
+                }
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_refresh),
+                        contentDescription = "iconSearch",
+                        modifier = Modifier.size(24.dp),
+                        tint = Color.White
+                    )
                 }
             }
         }
@@ -140,6 +135,7 @@ fun TabLayout() {
     })
     val tabIndex = pagerState.currentPage
     val coroutineScope = rememberCoroutineScope()
+
     Column(
         modifier = Modifier
             .clip(RoundedCornerShape(5.dp))
@@ -183,9 +179,32 @@ fun TabLayout() {
             modifier = Modifier.fillMaxSize()
         ) { page ->
             when (page) {
-                0 -> Text("Содержимое для Часы")
-                1 -> Text("Содержимое для Дни")
+                0 -> DayPage("Вкладка 1")
+                1 -> DayPage("Вкладка 2")
             }
+        }
+    }
+}
+
+@Composable
+fun DayPage(title: String) {
+    Card(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(start = 12.dp, end = 12.dp, top = 12.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = AccentBlue
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 1.dp
+        ),
+        shape = RoundedCornerShape(10.dp)
+    ) {
+        Column() {
+            Text(
+                color = BaseWhite,
+                text = title
+            )
         }
     }
 }
